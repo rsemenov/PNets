@@ -165,6 +165,9 @@ namespace PNets.Core
             return matrix;
         }
 
+
+        #region Static Methods
+
         public static Matrix SubsForth(Matrix A, Matrix b)          // Function solves Ax = b for A as a lower triangular matrix
         {
             if (A.L == null) A.MakeLU();
@@ -541,6 +544,26 @@ namespace PNets.Core
             return matStr;
         }
 
+        public static Matrix ConcatToRight(Matrix a, Matrix b)
+        {
+            if(a.rows!=b.rows)
+                throw new ArgumentException("Rows count are not same");
+            var m = new Matrix(a.rows, a.cols + b.cols);
+            for (int r = 0; r < a.rows; r++)
+            {
+                for (int ca = 0; ca < a.cols; ca++)
+                    m[r, ca] = a[r, ca];
+
+                for (int cb = 0; cb < b.cols; cb++)
+                    m[r, a.cols + cb] = b[r, cb];
+            }
+            return m;
+        }
+
+        #endregion
+
+        #region Operations
+
         //   O P E R A T O R S
 
         public static Matrix operator -(Matrix m)
@@ -557,6 +580,24 @@ namespace PNets.Core
 
         public static Matrix operator *(double n, Matrix m)
         { return Matrix.Multiply(n, m); }
+
+        public override bool Equals(object obj)
+        {
+            var m = obj as Matrix;
+            if(m==null)
+                return false;
+            for (int r = 0; r < this.rows; r++)
+            {
+                for (int c = 0; c < this.cols; c++)
+                {
+                    if (this[r, c] != m[r, c])
+                        return false;
+                }
+            }
+            return true;
+        }
+
+        #endregion
     }
 
     //  The class for exceptions

@@ -1,25 +1,24 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace PNets.Core
 {
     public class Vector : Matrix
     {
         public Vector(int size)
-            : base(1, size)
-        {
-
-        }
+            : base(size, 1)
+        {        }
 
         public double this[int i]
         {
-            get { return base[0, i]; }
-            set { base[0, i] = value; }
+            get { return base[i, 0]; }
+            set { base[i, 0] = value; }
         }
 
         public static Vector operator *(int n, Vector v)
         {
-            var nv = new Vector(v.cols);
-            for (int i = 0; i < v.cols; i++)
+            var nv = new Vector(v.rows);
+            for (int i = 0; i < v.rows; i++)
             {
                 nv[i] = v[i] * n;
             }
@@ -28,16 +27,15 @@ namespace PNets.Core
 
         public static Vector operator +(Vector a, Vector b)
         {
-            if (a.cols != b.cols)
+            if (a.rows != b.rows)
                 throw new ArgumentException("Different vector sizes");
 
-            var nv = new Vector(a.cols);
-            for (int i = 0; i < a.cols; i++)
+            var nv = new Vector(a.rows);
+            for (int i = 0; i < a.rows; i++)
             {
                 nv[i] = a[i] + b[i];
             }
             return nv;
         }
-
     }
 }
