@@ -19,11 +19,21 @@ namespace PNets.Tests
         }
 
         [Row("Files\\petri_net_1.txt")]
+        [Row("Files\\petri_net_2_fig_6.txt")]
+        [Row("Files\\petri_net_3_fig_51_i.txt")]
         [Test]
         public void PetryNetShouldBeStructuralBounded(string inFile)
         {
             var net = PetriNet.Parse(inFile);
             Assert.IsTrue(net.IsStructuralBounded());
+        }
+
+        [Row("Files\\petri_net_4_fig_51_j.txt")]
+        [Test]
+        public void PetryNetShouldBeStructuralUnbounded(string inFile)
+        {
+            var net = PetriNet.Parse(inFile);
+            Assert.IsFalse(net.IsStructuralBounded());
         }
     }
 }
