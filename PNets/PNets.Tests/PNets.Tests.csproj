@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="PetryNetTests.cs" />
+    <Compile Include="TreeBuilderTests.cs" />
     <Compile Include="TssAlgorithmTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -80,6 +81,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Files\petri_net_4_fig_51_j.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Files\petri_net_741.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

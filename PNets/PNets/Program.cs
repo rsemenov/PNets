@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Text;
 using System.IO;
+using PNets.Core;
 
 namespace PNets
 {
@@ -23,7 +24,8 @@ namespace PNets
             }
 
             var net = PNets.Core.PetriNet.Parse(args[0]);
-            var isBounded = net.IsStructuralBounded();
+            var checker = new PropertiesChecker(net);
+            var isBounded = checker.IsStructuralBounded();
             Console.WriteLine(String.Format("Given PetriNet is {0}", isBounded? "structural bounded" : "structural unbounded"));
         }
     }

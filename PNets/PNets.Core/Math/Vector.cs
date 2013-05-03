@@ -37,5 +37,40 @@ namespace PNets.Core
             }
             return nv;
         }
+
+        /* public static bool operator < (Vector a, Vector b)
+        {
+            if (a.rows != b.rows)
+                throw new ArgumentException("Different vector sizes");
+            bool f = false;
+            for (int i = 0; i < a.rows; i++)
+            {
+                if (a[i] <= b[i])
+                {
+                    if (a[i] < b[i])
+                        f = true;
+                }
+                else
+                    return false;
+            }
+            return f;
+        }
+
+        public static bool operator ==(Vector a, Vector b)
+        {
+            if (a.rows != b.rows)
+                throw new ArgumentException("Different vector sizes");
+            
+            for (int i = 0; i < a.rows; i++)
+            {
+                if (a[i] != b[i])
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+         */
+
     }
 }

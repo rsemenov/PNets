@@ -25,7 +25,8 @@ namespace PNets.Tests
         public void PetryNetShouldBeStructuralBounded(string inFile)
         {
             var net = PetriNet.Parse(inFile);
-            Assert.IsTrue(net.IsStructuralBounded());
+            var checker = new PropertiesChecker(net);
+            Assert.IsTrue(checker.IsStructuralBounded());
         }
 
         [Row("Files\\petri_net_4_fig_51_j.txt")]
@@ -33,7 +34,8 @@ namespace PNets.Tests
         public void PetryNetShouldBeStructuralUnbounded(string inFile)
         {
             var net = PetriNet.Parse(inFile);
-            Assert.IsFalse(net.IsStructuralBounded());
+            var checker = new PropertiesChecker(net);
+            Assert.IsFalse(checker.IsStructuralBounded());
         }
     }
 }

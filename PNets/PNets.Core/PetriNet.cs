@@ -51,11 +51,11 @@ namespace PNets.Core
             {
                 net.InitialMarking[i] = int.Parse(m0[i]);
             }
-
+            net.BuildIncedentMatrix();
             return net;
         }
 
-        private void BuildIncedentMatrix()
+        public void BuildIncedentMatrix()
         {
             IncedentMatrix = new Matrix(PlacesCount, TransitionsCount);
             
@@ -68,29 +68,6 @@ namespace PNets.Core
                 }
             }
         }
-
-        public bool IsStructuralBounded()
-        {            
-            BuildIncedentMatrix();
-            var incedentTranspose = IncedentMatrix.Transpose();
-            var matrix = Matrix.ConcatToRight(incedentTranspose, Matrix.IdentityMatrix(incedentTranspose.rows, incedentTranspose.rows));
-            IFindBasisAlgorithm basisAlgorithm = new TssAlgorithm();
-
-            var basis = basisAlgorithm.Execute(matrix);
-            int[] y = new int[PlacesCount];
-            
-            foreach (var v in basis)
-            {
-                for (int i = 0; i < PlacesCount; i++)
-                {
-                    if (v[i] > 0)
-                        y[i] = 1;
-                }
-            }
-            
-            return y.Sum()==y.Length;
-        }
-
 
     }
 
