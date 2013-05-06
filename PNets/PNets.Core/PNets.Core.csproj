@@ -43,8 +43,9 @@
     <Compile Include="Math\Basis.cs" />
     <Compile Include="Math\MathExtensions.cs" />
     <Compile Include="Math\Matrix.cs" />
+    <Compile Include="NetProperties\Boundness.cs" />
     <Compile Include="PetriNet.cs" />
-    <Compile Include="PropertiesChecker.cs" />
+    <Compile Include="NetProperties\PropertiesChecker.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Trees\BackTrackCheckingResult.cs" />
     <Compile Include="Trees\FullCoverageTreeBuilder.cs" />
