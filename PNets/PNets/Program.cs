@@ -11,6 +11,7 @@ namespace PNets
     {
         static void Main(string[] args)
         {
+
             if (args.Length < 1)
             {
                 Console.WriteLine("Petri Net file does not set. Please enter file with Petri Net as first command line parameter.");

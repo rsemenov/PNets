@@ -15,7 +15,7 @@ namespace PNets.Tests
         {
             var net = PetriNet.Parse(inFile);
             var checker = new PropertiesChecker(net);
-            Assert.IsTrue(checker.CheckStructurallyBoundness() == Boundness.StructurallyBounded);
+            Assert.IsTrue(checker.CheckStructurallyBoundness() == StructurallyBoundness.StructurallyBounded);
         }
 
         [Row("Files\\petri_net_4_fig_51_j.txt")]
@@ -24,7 +24,7 @@ namespace PNets.Tests
         {
             var net = PetriNet.Parse(inFile);
             var checker = new PropertiesChecker(net);
-            Assert.IsTrue(checker.CheckStructurallyBoundness() == Boundness.NotStructurallyBounded);
+            Assert.IsTrue(checker.CheckStructurallyBoundness() == StructurallyBoundness.NotStructurallyBounded);
         }
 
         [Row("Files\\petri_net_4_fig_51_j.txt")]

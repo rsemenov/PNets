@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using PNets.Core.Trees;
 
 namespace PNets.Core.NetProperties
 {
@@ -9,19 +9,52 @@ namespace PNets.Core.NetProperties
     {
         private PetriNet _petriNet { get; set; }
         private IFindBasisAlgorithm _basisAlgorithm = new TssAlgorithm();
+        private CoverageTreeBuilder _coverageTreeBuilder;
+        private FullCoverageTreeBuilder _fullCoverageTreeBuilder;
 
         public List<Vector> Tinvariants { get; private set; }
         public List<Vector> Sinvariants { get; private set; }
 
-        public Boundness? Boundness { get; private set; }
-        public Conservativeness? Conservativeness { get; private set; }
-        public Consistency? Consistency { get; private set; }
-        public Repetitiveness? Repetitiveness { get; private set; }
+        public Tree CoverageTree { get; private set; }
+        public Tree FullCoverageTree { get; private set; }
+
+        [Property]
+        public StructurallyBoundness StructurallyBoundness { get; private set; }
+        [Property]
+        public Boundness Boundness { get; private set; }
+        [Property]
+        public Conservativeness Conservativeness { get; private set; }
+        [Property]
+        public Consistency Consistency { get; private set; }
+        [Property]
+        public Repetitiveness Repetitiveness { get; private set; }
 
 
         public PropertiesChecker(PetriNet petriNet)
         {
             _petriNet = petriNet;
+            _coverageTreeBuilder = new CoverageTreeBuilder(_petriNet);
+            _fullCoverageTreeBuilder  = new FullCoverageTreeBuilder(_petriNet);
+        }
+
+        public void Analize()
+        {
+            GetTinvariants();
+            GetSinvariants();
+            StructurallyBoundness = CheckStructurallyBoundness();
+            Conservativeness = CheckConservativeness();
+            Consistency = CheckConsistency();
+            Repetitiveness = CheckRepetitiveness();
+
+            if (StructurallyBoundness == StructurallyBoundness.NotStructurallyBounded)
+            {
+                CoverageTree = _coverageTreeBuilder.Build();
+                Boundness = CheckBoundness();
+                if(Boundness == Boundness.Unbounded)
+                {
+                    FullCoverageTree = _fullCoverageTreeBuilder.Build();
+                }
+            }
         }
 
         public void GetTinvariants()
@@ -34,10 +67,31 @@ namespace PNets.Core.NetProperties
             Sinvariants = _basisAlgorithm.Execute(_petriNet.IncedentMatrix.Transpose());
         }
 
+        public Boundness CheckBoundness()
+        {
+            if(CoverageTree!=null)
+            {
+                if(CoverageTree.TraverseAnyChecking((node)=>
+                                                        {
+                                                            for(int i=0;i<node.Marking.rows;i++)
+                                                            {
+                                                                if(node.Marking[i]==double.PositiveInfinity)
+                                                                    return true;
+                                                            }
+                                                            return false;
+                                                        }))
+                {
+                    return Boundness.Unbounded;
+                }
+                return Boundness.Bounded;
+            }
+            return Boundness.Unbounded;
+        }
+
         #region structurall properties
 
         //A^Tx<=0, x>0
-        public Boundness CheckStructurallyBoundness()
+        public StructurallyBoundness CheckStructurallyBoundness()
         {            
             var incedentTranspose = _petriNet.IncedentMatrix.Transpose();
             var matrix = Matrix.ConcatToRight(incedentTranspose, Matrix.IdentityMatrix(incedentTranspose.rows, incedentTranspose.rows));            
@@ -55,7 +109,7 @@ namespace PNets.Core.NetProperties
                 }
             }
 
-            return x.Length == x.Sum() ? NetProperties.Boundness.StructurallyBounded : NetProperties.Boundness.NotStructurallyBounded;
+            return x.Length == x.Sum() ? NetProperties.StructurallyBoundness.StructurallyBounded : NetProperties.StructurallyBoundness.NotStructurallyBounded;
         }
 
         //A^Tx=0, x>0
@@ -76,7 +130,7 @@ namespace PNets.Core.NetProperties
             }
 
             if (cn.Length == cn.Sum())
-                return NetProperties.Conservativeness.Conservative;
+                return Conservativeness.Conservative;
             
             if (pcn.Length == pcn.Sum())
                 return NetProperties.Conservativeness.PartiallyConservative;

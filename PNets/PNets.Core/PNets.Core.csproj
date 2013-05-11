@@ -44,6 +44,9 @@
     <Compile Include="Math\MathExtensions.cs" />
     <Compile Include="Math\Matrix.cs" />
     <Compile Include="NetProperties\Boundness.cs" />
+    <Compile Include="NetProperties\EnumsConverters.cs" />
+    <Compile Include="NetProperties\PropertyAttribute.cs" />
+    <Compile Include="NetProperties\TranslateAttribute.cs" />
     <Compile Include="PetriNet.cs" />
     <Compile Include="NetProperties\PropertiesChecker.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

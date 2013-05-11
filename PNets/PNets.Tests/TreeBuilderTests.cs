@@ -32,10 +32,13 @@ namespace PNets.Tests
             var treeBuilder = new FullCoverageTreeBuilder(petriNet);
             var tree = treeBuilder.Build();
             Assert.IsTrue(tree.Root.Child.Count == 2);
+            Assert.IsTrue(tree.Root.ChildTransitions.Count == 2);
             Assert.IsTrue(tree.Root.Child[0].Child.Count == 2);
+            Assert.IsTrue(tree.Root.Child[0].ChildTransitions.Count == 2);
             Assert.IsTrue(tree.Root.Child[1].Child == null);
             Assert.IsTrue(tree.Root.Child[0].Child[0].Child == null);
             Assert.IsTrue(tree.Root.Child[0].Child[1].Child.Count == 1);
+            Assert.IsTrue(tree.Root.Child[0].Child[1].ChildTransitions.Count == 1);
         }
 
         [Test]

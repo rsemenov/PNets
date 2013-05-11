@@ -5,6 +5,7 @@ using System.Text;
 
 namespace PNets.Core.Trees
 {
+    //TODO build this using existing coverageTree. Do not build twice!
     public class FullCoverageTreeBuilder : TreeBuilderBase
     {
         public FullCoverageTreeBuilder(PetriNet petriNet)
@@ -30,6 +31,7 @@ namespace PNets.Core.Trees
                 BuildFromNode(newNode);
                 node.Child = newNode.Child;
                 node.Marking = newNode.Marking;
+                node.ChildTransitions = newNode.ChildTransitions;
                 return;
             }
             if(node.Child!=null)

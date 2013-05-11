@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace PNets.Core
+namespace PNets.Core.Trees
 {
     public class TreeNode
     {
@@ -11,6 +11,25 @@ namespace PNets.Core
         public List<TreeNode> Child { get; set; }
         public List<int> ChildTransitions { get; set; }
         public TreeNode Parent { get; set; }
+
+        private string _id;
+        public string Id
+        {
+            get
+            {
+                if (String.IsNullOrEmpty(_id))
+                {
+                    _id = "[";
+                    for (int i = 0; i < Marking.rows; i++)
+                    {
+                        _id += (Marking[i] == double.PositiveInfinity ? "w" : Marking[i].ToString()) + ";";
+                    }
+                    _id = Id.TrimEnd(';') + "]";
+                }
+                return _id;
+            }
+        }
+
 
         public bool IsOmegaLeaf
         {
@@ -46,7 +65,20 @@ namespace PNets.Core
 
     public class Tree
     {
-        public TreeNode Root { get; set; }        
+        public TreeNode Root { get; set; }
+
+        public bool TraverseAnyChecking(Func<TreeNode, bool> predicate)
+        {
+            return TraverseAnyChecking(predicate, Root);
+        }
+
+        private bool TraverseAnyChecking(Func<TreeNode, bool> predicate, TreeNode node)
+        {
+            if (predicate(node))
+                return true;
+
+            return node.Child != null && node.Child.Any(child => TraverseAnyChecking(predicate, child));
+        }
     }
 
    
