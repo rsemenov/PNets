@@ -46,9 +46,10 @@ namespace PNets.Core.NetProperties
             Consistency = CheckConsistency();
             Repetitiveness = CheckRepetitiveness();
 
+            CoverageTree = _coverageTreeBuilder.Build();
+
             if (StructurallyBoundness == StructurallyBoundness.NotStructurallyBounded)
             {
-                CoverageTree = _coverageTreeBuilder.Build();
                 Boundness = CheckBoundness();
                 if(Boundness == Boundness.Unbounded)
                 {

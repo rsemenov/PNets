@@ -48,6 +48,7 @@ namespace PNets.WFClient
                 _propertiesChecker = new PropertiesChecker(_petriNet);
                 _propertiesChecker.Analize();
                 SetProperties();
+                SetInvariants();
                 if(_propertiesChecker.CoverageTree!=null)
                 {
                     DrawTree(_propertiesChecker.CoverageTree, gViewer1);
@@ -61,6 +62,8 @@ namespace PNets.WFClient
 
         private void ClearAll()
         {
+            listBox1.Items.Clear();
+            listBox2.Items.Clear();
             gViewer1.Graph = new Graph("");
             gViewer2.Graph = new Graph("");
         }
@@ -68,23 +71,12 @@ namespace PNets.WFClient
         private void DrawTree(Tree tree, GViewer gViewer)
         {
             var g = new Graph("Coverage tree");
-            FillGraph(g, tree.Root);
-            gViewer.Graph = g;
+            var graphbuilder = new GraphBuilder();
+            graphbuilder.FillGraph(g, tree.Root);
+            if(g.NodeCount<50)
+                gViewer.Graph = g;
         }
-
-        private void FillGraph(Graph g, TreeNode node)
-        {
-            g.AddNode(node.Id);
-            if(node.Child!=null)
-            {
-                for(int i=0;i<node.Child.Count;i++)
-                {
-                    FillGraph(g, node.Child[i]);
-                    g.AddEdge(node.Id, "t"+node.ChildTransitions[i], node.Child[i].Id);
-                }
-            }
-        }
-
+        
         private void SetProperties()
         {
             if(_propertiesChecker!=null)
@@ -110,6 +102,20 @@ namespace PNets.WFClient
                         }
                     }  
                 }
+            }
+        }
+
+        private void SetInvariants()
+        {
+            for (int i = 0; i < _propertiesChecker.Sinvariants.Count; i++)
+            {
+                var sinvariant = _propertiesChecker.Sinvariants[i];
+                listBox1.Items.Add("s"+i+" = "+sinvariant.ToString());
+            }
+            for (int i = 0; i < _propertiesChecker.Tinvariants.Count; i++)
+            {
+                var tinvariant = _propertiesChecker.Tinvariants[i];
+                listBox2.Items.Add("t" + i + " = " + tinvariant.ToString());
             }
         }
     }

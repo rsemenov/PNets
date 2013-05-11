@@ -38,6 +38,16 @@ namespace PNets.Core
             return nv;
         }
 
+        public override string ToString()
+        {
+            var s = "("+this[0];
+            for(int i=1;i<rows;i++)
+            {
+                s += ", " + this[i];
+            }
+            return s + ")";
+        }
+
         /* public static bool operator < (Vector a, Vector b)
         {
             if (a.rows != b.rows)

@@ -60,10 +60,6 @@
       <Project>{05082198-8E24-41FD-965D-8CC83A31968D}</Project>
       <Name>PNets.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\PNets\PNets.csproj">
-      <Project>{342D1CE3-142C-4F75-AF2A-8711A680CA42}</Project>
-      <Name>PNets</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="Files\petri_net_1.txt">
@@ -97,6 +93,21 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Files\petri_net_fig_51_g.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Files\petri_net_mutex.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Files\petri_net_fig_16.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Files\petri_net_fig_14_multiprocessor.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

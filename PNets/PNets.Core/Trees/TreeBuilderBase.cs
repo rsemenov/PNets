@@ -67,16 +67,20 @@ namespace PNets.Core
             List<int> tRes = new List<int>();
             for (int i = 0; i < tSet.Count; i++)
             {
-                bool toAdd = true;
+                bool available = true, dead = true;
                 for (int p = 0; p < PetriNet.PlacesCount; p++)
                 {
                     if (PetriNet.WeightMatrix[p, tSet[i]] != null && 
                         PetriNet.WeightMatrix[p, tSet[i]].PT > 0 && PetriNet.WeightMatrix[p, tSet[i]].PT > node.Marking[p])
                     {
-                        toAdd = false;
+                        available = false;
                     }
+                    //if (PetriNet.WeightMatrix[p, tSet[i]] != null && PetriNet.WeightMatrix[p, tSet[i]].TP > 0)
+                    //{
+                    //    dead = false;
+                    //}
                 }
-                if (toAdd)
+                if (available )//&& !dead)
                     tRes.Add(tSet[i]);
             }
             return tRes;

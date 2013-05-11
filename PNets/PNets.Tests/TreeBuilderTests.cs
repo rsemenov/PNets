@@ -42,10 +42,18 @@ namespace PNets.Tests
         }
 
         [Test]
+        [Row("Files\\petri_net_mutex.txt")]
+        public void CoverageTreeShouldBeBuild(string file)
+        {
+            var petriNet = PetriNet.Parse(file);
+            var treeBuilder = new CoverageTreeBuilder(petriNet);
+            var tree = treeBuilder.Build();
+        }
+
+        [Test]
         [Row("Files\\petri_net_2_fig_6.txt")]
         [Row("Files\\petri_net_3_fig_51_i.txt")]
         [Row("Files\\petri_net_4_fig_51_j.txt")]
-        [Row("Files\\petri_net_1.txt")]
         public void FullCoverageTreeShouldBeBuild(string file)
         {
             var petriNet = PetriNet.Parse(file);

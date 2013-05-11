@@ -29,7 +29,7 @@ namespace PNets.Core
                 
                 if (parts.Length != 3)
                 {
-                    throw new FormatException(string.Format("Incorrect file format. Arcs arguments are not correct. Line = ", k));
+                    throw new FormatException(string.Format("Incorrect file format. Arcs arguments are not correct. Line {0}", k));
                 }
 
                 var arcType = (ArcType)Enum.Parse(typeof(ArcType), (parts[0][0].ToString()+parts[1][0].ToString()).ToUpperInvariant());
